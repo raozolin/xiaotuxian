@@ -5,12 +5,8 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
-import { getData } from "@/apis/test.js";
 import ElementPlus from "element-plus";
-// // 测试接口函数
-// getData().then((res) => {
-//   console.log(res);
-// });
+import "@/styles/common.scss";
 
 const app = createApp(App);
 
