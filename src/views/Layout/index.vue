@@ -4,7 +4,7 @@
   <LayoutHeader />
   <!-- 破坏复用机制 强制销毁重建 解决路由缓存问题 -->
   <!-- <RouterView :key="$route.fullPath" /> -->
-  <RouterView />>
+  <RouterView />
   <LayoutFooter />
 </template>
 <script setup>
