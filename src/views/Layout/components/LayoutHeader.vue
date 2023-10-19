@@ -1,6 +1,11 @@
 <script setup>
 import { useCategoryStore } from "@/stores/category.js";
 const Cate = useCategoryStore();
+import { onMounted } from "vue";
+// 千万别忘记了声明周期
+onMounted(() => {
+  Cate.getCategory();
+});
 </script>
 
 <template>

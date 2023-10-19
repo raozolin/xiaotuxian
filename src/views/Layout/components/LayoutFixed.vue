@@ -1,10 +1,15 @@
 <script setup>
 import { useCategoryStore } from "@/stores/category.js";
-
+import { onMounted } from "vue";
 import { useScroll } from "@vueuse/core";
 const { y } = useScroll(window);
 // 使用pinia中的数据
 const Cate = useCategoryStore();
+
+// 千万别忘记了声明周期
+onMounted(() => {
+  Cate.getCategory();
+});
 </script>
 
 <template>
