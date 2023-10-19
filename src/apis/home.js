@@ -16,3 +16,10 @@ export const getHotAPI = () => {
     url: "/home/hot",
   });
 };
+
+// 写产品列表的接口
+export const getProductAPI = () => {
+  return httpIntance({
+    url: "/home/goods",
+  });
+};
