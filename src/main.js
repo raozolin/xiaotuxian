@@ -10,7 +10,6 @@ import "@/styles/common.scss";
 // 引入懒加载指令插件，并且注册
 import { lazyPlugin } from "@/directive/index.js";
 const app = createApp(App);
-// 定义懒加载全局指令
 
 app.use(createPinia());
 app.use(router);
