@@ -10,3 +10,9 @@ export const getNewAPI = () => {
     url: "/home/new",
   });
 };
+// 写人气推荐的接口
+export const getHotAPI = () => {
+  return httpIntance({
+    url: "/home/hot",
+  });
+};
