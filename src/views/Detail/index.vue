@@ -1,4 +1,5 @@
 <script setup>
+import DetailHot from "./components/DetailHot.vue";
 import { getDetailAPI } from "@/apis/detail.js";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -13,26 +14,24 @@ onMounted(() => {
   getDetail();
 });
 </script>
-
 <template>
   <div class="xtx-goods-page">
-    <!-- v-if做判断条件，如果为真，才继续渲染 -->
     <div class="container" v-if="detailList.details">
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <!-- 错误原因:detailList一开始， {}.categories->undefined->undefined[1]
-            如何解决？
-            1.使用可选链的语法 ?.
-            2.v-if手动控制渲染时机，保证只有数据存在才渲染
-         -->
+          <!-- 
+            错误原因：goods一开始{}  {}.categories -> undefined  -> undefined[1]
+            1. 可选链的语法?. 
+            2. v-if手动控制渲染时机 保证只有数据存在才渲染
+           -->
           <el-breadcrumb-item
-            :to="{ path: '`/category/${detailList.categories?.[1].id}`' }"
-            >{{ detailList.categories?.[1].name }}</el-breadcrumb-item
-          >
+            :to="{ path: `/category/${detailList.categories[1].id}` }"
+            >{{ detailList.categories[1].name }}
+          </el-breadcrumb-item>
           <el-breadcrumb-item
-            :to="{ path: '`/category/sub/${detailList.categories?.[0].id}' }"
-            >{{ detailList.categories?.[0].name }}
+            :to="{ path: `/category/sub/${detailList.categories[0].id}` }"
+            >{{ detailList.categories[0].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
         </el-breadcrumb>
@@ -63,7 +62,7 @@ onMounted(() => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ detailList.brand.name }}+</p>
+                  <p>{{ detailList.brand.name }}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
@@ -123,14 +122,19 @@ onMounted(() => {
                   <img
                     v-for="img in detailList.details.pictures"
                     :src="img"
-                    alt=""
                     :key="img"
+                    alt=""
                   />
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <!-- 24小时 -->
+              <DetailHot />
+              <!-- 周 -->
+              <DetailHot />
+            </div>
           </div>
         </div>
       </div>
