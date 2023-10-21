@@ -1,13 +1,27 @@
 <script setup>
 import { fetchHotGoodsAPI } from "@/apis/detail.js";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
+
+// 设计一个props 是为了适配不同的标题和参数
+const props = defineProps({
+  hotType: {
+    type: Number,
+  },
+});
+// 适配标题
+const TYPEMAP = {
+  1: "24小时热榜",
+  2: "周热榜",
+};
+// 计算属性
+const title = computed(() => TYPEMAP[props.hotType]);
 
 // 设置参数列表
 const GoodData = ref({
   id: route.params.id,
-  type: 1,
+  type: props.hotType,
 });
 const HotGoodList = ref([]);
 const fetchHotGoods = async () => {
@@ -17,11 +31,12 @@ const fetchHotGoods = async () => {
 onMounted(() => {
   fetchHotGoods();
 });
+console.log(title);
 </script>
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
       to="/"

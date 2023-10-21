@@ -1,9 +1,9 @@
 <script setup>
-import DetailHot from "./components/DetailHot.vue";
 import { getDetailAPI } from "@/apis/detail.js";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
+import DetailHot from "./components/Hot.vue";
 const route = useRoute();
 const detailList = ref([]);
 const getDetail = async () => {
@@ -131,9 +131,9 @@ onMounted(() => {
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
               <!-- 24小时 -->
-              <DetailHot />
+              <DetailHot :hot-type="1" />
               <!-- 周 -->
-              <DetailHot />
+              <DetailHot :hot-type="2" />
             </div>
           </div>
         </div>
