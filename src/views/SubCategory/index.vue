@@ -1,4 +1,20 @@
-<script setup></script>
+<script setup>
+import { getSubCategoryAPI } from "@/apis/category.js";
+import { ref, onMounted } from "vue";
+// 获得路由里面的那个参数
+import { useRoute } from "vue-router";
+const route = useRoute();
+
+const subList = ref({});
+
+const getSubCategory = async () => {
+  const res = await getSubCategoryAPI(route.params.id);
+  subList.value = res.result;
+};
+onMounted(() => {
+  getSubCategory();
+});
+</script>
 
 <template>
   <div class="container">
@@ -6,8 +22,11 @@
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">居家 </el-breadcrumb-item>
-        <el-breadcrumb-item>居家生活用品</el-breadcrumb-item>
+        <!-- 这是一级路由的跳转路径 -->
+        <el-breadcrumb-item :to="{ path: `/category/${subList.parentId}` }">{{
+          subList.parentName
+        }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ subList.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">
