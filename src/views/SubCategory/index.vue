@@ -44,6 +44,21 @@ const tabChange = () => {
 
   getGoodList();
 };
+
+// 这是到达底部的时候触发的函数
+const disabled = ref(false);
+const load = async () => {
+  // 获取下一页数据
+  reqData.value.page++;
+  // 根据新参数重新发送请求
+  const res = await getSubCategoryGoodAPI(reqData.value);
+  // 新老数据拼接
+  goodList.value = [...goodList.value, ...res.result.items];
+  //   加载完毕停止监听
+  if (res.result.length === 0) {
+    disabled.value = true;
+  }
+};
 </script>
 
 <template>
@@ -71,7 +86,12 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <!-- 图片无线加载的功能项目配置 -->
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        :infinite-scroll-disabled="disabled"
+      >
         <!-- 商品列表-->
         <!-- :goods="goods" 是这个组间本身要求传入的参数 -->
         <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
