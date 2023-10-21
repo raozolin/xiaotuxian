@@ -1,6 +1,8 @@
 <script setup>
 import { getSubCategoryAPI } from "@/apis/category.js";
 import { ref, onMounted } from "vue";
+import { getSubCategoryGoodAPI } from "@/apis/category.js";
+import GoodsItem from "../Home/components/GoodsItem.vue";
 // 获得路由里面的那个参数
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -13,6 +15,27 @@ const getSubCategory = async () => {
 };
 onMounted(() => {
   getSubCategory();
+});
+
+// 获取基础列表数据渲染
+const goodList = ref([]);
+// 准备基础参数
+// 这是后端的字段
+const reqData = ref({
+  categoryId: route.params.id,
+  // 以下都是默认值
+  page: 1,
+  pageSize: 20,
+  sortField: "publishTime",
+});
+
+const getGoodList = async () => {
+  // 把上面准备好的参数列表传入里面
+  const res = await getSubCategoryGoodAPI(reqData.value);
+  goodList.value = res.result.items;
+};
+onMounted(() => {
+  getGoodList();
 });
 </script>
 
@@ -37,6 +60,7 @@ onMounted(() => {
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
       </div>
     </div>
   </div>

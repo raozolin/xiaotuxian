@@ -19,3 +19,21 @@ export const getSubCategoryAPI = (id) => {
     },
   });
 };
+
+/**
+ * @description: 获取导航数据
+ * @data { 
+     categoryId: 1005000 ,
+     page: 1,
+     pageSize: 20,
+     sortField: 'publishTime' | 'orderNum' | 'evaluateNum'
+   } 
+ * @return {*}
+ */
+export const getSubCategoryGoodAPI = (data) => {
+  return httpIntance({
+    url: "/category/goods/temporary",
+    method: "POST",
+    data,
+  });
+};
