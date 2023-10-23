@@ -26,6 +26,8 @@ const { elementX, elementY, isOutside } = useMouseInElement(target);
 // 控制滑块跟随移动(监听elementX/Y变化，一旦变化，重新设置left/top)
 const left = ref(0);
 const top = ref(0);
+const positionX = ref(0);
+const positionY = ref(0);
 
 watch([elementX, elementY], () => {
   // 有效范围内控制滑块距离
@@ -51,13 +53,18 @@ watch([elementX, elementY], () => {
   if (elementY.value < 100) {
     top.value = 0;
   }
+
+  // 控制大图的显示
+  // 大图的移动方向和滑块的移动方向相反，且数值为2倍
+  positionX.value = -left.value * 2;
+  positionY.value = -top.value * 2;
 });
 </script>
 
 <template>
-  <div class="goods-image">
+  <div class="goods-image" ref="target">
     <!-- 左侧大图-->
-    <div class="middle" ref="target">
+    <div class="middle">
       <!-- 通过下标切换大图 -->
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
@@ -83,11 +90,11 @@ watch([elementX, elementY], () => {
       :style="[
         {
           backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`,
         },
       ]"
-      v-show="false"
+      v-show="!isOutside"
     ></div>
   </div>
 </template>
