@@ -31,7 +31,6 @@ const fetchHotGoods = async () => {
 onMounted(() => {
   fetchHotGoods();
 });
-console.log(title);
 </script>
 
 <template>
