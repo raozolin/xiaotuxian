@@ -2,15 +2,14 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useMouseInElement } from "@vueuse/core";
+defineProps({
+  imageList: {
+    type: Array,
+    default: () => [],
+  },
+});
 
 // 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
-];
 
 // 小图切换大图显示
 const activeIndex = ref(0);
@@ -62,14 +61,18 @@ watch([elementX, elementY], () => {
 </script>
 
 <template>
-  <div class="goods-image" ref="target">
+  <div class="goods-image">
     <!-- 左侧大图-->
-    <div class="middle">
+    <div class="middle" ref="target">
       <!-- 通过下标切换大图 -->
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
       <!-- 在渲染的时候，ref的数据不用value -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div
+        class="layer"
+        :style="{ left: `${left}px`, top: `${top}px` }"
+        v-show="!isOutside"
+      ></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -89,7 +92,7 @@ watch([elementX, elementY], () => {
       class="large"
       :style="[
         {
-          backgroundImage: `url(${imageList[0]})`,
+          backgroundImage: `url(${imageList[activeIndex]})`,
           backgroundPositionX: `${positionX}px`,
           backgroundPositionY: `${positionY}px`,
         },
