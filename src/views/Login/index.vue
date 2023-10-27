@@ -1,5 +1,12 @@
 <script setup>
 import { ref } from "vue";
+import { loginAPI } from "@/apis/user.js";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+
+// 带r是调用方法，不带r是获取参数
+import { useRouter } from "vue-router";
+
 // 表单校验功能（账户名+密码）
 // 1.准备表单对象
 const form = ref({
@@ -43,12 +50,24 @@ const rules = {
 // 获取form实例做统一校验
 // 再将该响应式变量绑定到需要获取的组间身上ref="formRef"
 const formRef = ref(null);
+const router = useRouter();
 const doLogin = () => {
+  // 解构赋值
+  const { account, password } = form.value;
+
   // 调用实例方法
   // 这是该组件内置的方法
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     // valid:所有项表单都通过校验，才为true
     if (valid) {
+      const res = await loginAPI({ account, password });
+      console.log(res);
+      // 1.提示用户
+      ElMessage({ type: "success", message: "登录成功" });
+
+      // 2.跳转首页
+      // replace和push都可选，但是选replace可以防止用户反复返回登录里
+      router.replace({ path: "/" });
     }
   });
 };
@@ -97,7 +116,9 @@ const doLogin = () => {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin()"
+                >点击登录</el-button
+              >
             </el-form>
           </div>
         </div>
