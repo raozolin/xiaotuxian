@@ -135,7 +135,7 @@ const addCart = () => {
               <!-- 按钮组件 -->
 
               <div>
-                <el-button size="large" class="btn" @click="addCart">
+                <el-button size="large" class="btn" @click="addCart()">
                   加入购物车
                 </el-button>
               </div>
