@@ -24,8 +24,8 @@ const skuChange = (sku) => {
 };
 
 const count = ref(1);
-const countChange = (count) => {
-  count++;
+const countChange = () => {
+  count.value++;
 };
 
 // 添加购物车
@@ -35,6 +35,7 @@ const addCart = () => {
     cartStore.addCart({
       id: detailList.value.id,
       name: detailList.value.name,
+      price: detailList.value.price,
       pictures: detailList.value.mainPictures[0],
       count: count.value,
       skuId: skuObj.skuId,
@@ -127,9 +128,9 @@ const addCart = () => {
 
               <!-- 数据组件 -->
               <el-input-number
-                v-model="num"
+                v-model="count"
                 :max="count"
-                @change="countChange(count)"
+                @change="countChange()"
               />
 
               <!-- 按钮组件 -->
