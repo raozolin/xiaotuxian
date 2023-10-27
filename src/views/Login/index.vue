@@ -39,6 +39,19 @@ const rules = {
     },
   ],
 };
+
+// 获取form实例做统一校验
+// 再将该响应式变量绑定到需要获取的组间身上ref="formRef"
+const formRef = ref(null);
+const doLogin = () => {
+  // 调用实例方法
+  // 这是该组件内置的方法
+  formRef.value.validate((valid) => {
+    // valid:所有项表单都通过校验，才为true
+    if (valid) {
+    }
+  });
+};
 </script>
 
 <template>
@@ -69,6 +82,7 @@ const rules = {
               label-position="right"
               label-width="60px"
               status-icon
+              ref="formRef"
             >
               <!-- prop="account" 指定表单域的校验字段名 -->
               <el-form-item prop="account" label="账户">
