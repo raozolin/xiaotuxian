@@ -1,8 +1,19 @@
 <script setup>
 // 拿取token,在pinia里面拿取
 import {useUserStore} from "@/stores/user.js"
+import { useRouter } from "vue-router";
 const userStore=useUserStore()
+const router=useRouter()
+// 用户点击退出登录按钮后的回调函数
+const confirm=()=>{
+  // 退出登录用户的业务逻辑实现
+  // 1.清除当前用户信息 触发action函数
+  userStore.clearUserInfo()
+  // 2.跳转到登录页面
+  router.push('/login')
 
+
+}
 
 </script>
 
@@ -18,7 +29,10 @@ const userStore=useUserStore()
           <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.userInfo.account }}</a></li>
           </li>
           <li>
+            <!-- @confrirm="" 当点击确认按钮的时候，自动执行的事件，组间自带的 -->
             <el-popconfirm
+            
+             @confirm="confirm"
               title="确认退出吗?"
               confirm-button-text="确认"
               cancel-button-text="取消"
