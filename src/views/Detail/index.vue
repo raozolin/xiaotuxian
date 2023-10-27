@@ -25,7 +25,7 @@ const skuChange = (sku) => {
 
 const count = ref(1);
 const countChange = (count) => {
-  console.log(count);
+  count++;
 };
 
 // 添加购物车
@@ -129,7 +129,7 @@ const addCart = () => {
               <el-input-number
                 v-model="num"
                 :max="count"
-                @change="countChange"
+                @change="countChange(count)"
               />
 
               <!-- 按钮组件 -->

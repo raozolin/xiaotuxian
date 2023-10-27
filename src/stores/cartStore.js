@@ -23,10 +23,17 @@ export const useCartStore = defineStore(
         cartList.value.push(goods);
       }
     };
+    // 3.添加删除购物车功能
+    const clearCart = (skuId) => {
+      // 找到要删除项的下标值-splice方法||使用数组的过滤方法filter
+      const index = cartList.value.findIndex((item) => skuId === item.skuId);
+      cartList.value.splice(index, 1);
+    };
 
     return {
       cartList,
       addCart,
+      clearCart,
     };
   },
   {
