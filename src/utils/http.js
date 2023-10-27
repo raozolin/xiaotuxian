@@ -20,6 +20,7 @@ httpIntance.interceptors.response.use(
   (res) => res.data,
   (e) => {
     // 统一错误提示
+    // 只要配置一次，就可以使得多个接口生效
     ElMessage({
       type: "warning",
       message: e.response.data.message,
