@@ -1,5 +1,7 @@
 <script setup>
-
+// 拿取token,在pinia里面拿取
+import {useUserStore} from "@/stores/user.js"
+const userStore=useUserStore()
 
 
 </script>
@@ -9,6 +11,8 @@
     <div class="container">
       <ul>
         <!-- v-if,v-else多模板渲染，用来区分登录状态和非登录状态 -->
+        <!-- 登录时显示第一块，非登录时显示第二块 -->
+        <!-- 如何判断是否有登录？是否有token -->
         <template v-if="true">
           <li>
           <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
