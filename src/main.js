@@ -10,10 +10,15 @@ import "@/styles/common.scss";
 // 引入懒加载指令插件，并且注册
 import { lazyPlugin } from "@/directive/index.js";
 import { componentPlugin } from "@/components/index.js";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 const app = createApp(App);
+const pinia = createPinia();
+
+// 注册持久化插件
+pinia.use(piniaPluginPersistedstate);
 
 app.use(componentPlugin);
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.use(ElementPlus);
 app.use(lazyPlugin);
