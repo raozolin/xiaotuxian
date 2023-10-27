@@ -15,7 +15,7 @@ const userStore=useUserStore()
         <!-- 如何判断是否有登录？是否有token -->
         <template v-if="userStore.userInfo.token">
           <li>
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.userInfo.account }}</a></li>
           </li>
           <li>
             <el-popconfirm
