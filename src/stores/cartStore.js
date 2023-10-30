@@ -40,7 +40,13 @@ export const useCartStore = defineStore(
       cartList.value.reduce((a, c) => a + c.count * c.price, 0)
     );
 
+    // 单选功能
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => (item.skuId = skuId));
+      item.selected = selected;
+    };
     return {
+      singleCheck,
       allCount,
       allPrice,
       cartList,
