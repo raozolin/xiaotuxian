@@ -2,11 +2,15 @@
 const cartList = [];
 import { useCartStore } from "@/stores/cartStore";
 const cartStore = useCartStore();
-const singleChange = function (i, selected) {
+const singleCheck = function (i, selected) {
   // store cartlist数组 无法知道要修改谁的选中状态？
   // 除了selected，要补充一个用来筛选的参数 skuId
 
   cartStore.singleCheck(i.skuId, selected);
+};
+
+const allCheck = (selected) => {
+  cartStore.allCheck(selected);
 };
 </script>
 
@@ -18,7 +22,10 @@ const singleChange = function (i, selected) {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox
+                  :model-value="cartStore.isAll"
+                  @change="allCheck"
+                />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -34,7 +41,7 @@ const singleChange = function (i, selected) {
                 <!-- 单选框 -->
                 <el-checkbox
                   :model-value="i.selected"
-                  @change="singleChange(i, selected)"
+                  @change="(selected) => singleCheck(i, selected)"
                 />
               </td>
               <td>
