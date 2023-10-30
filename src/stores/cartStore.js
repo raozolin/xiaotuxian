@@ -2,7 +2,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user.js";
-import { insertCartAPI, findNewCartListAPI } from "@/apis/cart.js";
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from "@/apis/cart.js";
 
 export const useCartStore = defineStore(
   "cart",
@@ -38,10 +38,16 @@ export const useCartStore = defineStore(
       }
     };
     // 3.添加删除购物车功能
-    const clearCart = (skuId) => {
-      // 找到要删除项的下标值-splice方法||使用数组的过滤方法filter
-      const index = cartList.value.findIndex((item) => skuId === item.skuId);
-      cartList.value.splice(index, 1);
+    const clearCart = async (skuId) => {
+      if (isLogin.value) {
+        await delCartAPI([skuId]);
+        const res = await findNewCartListAPI();
+        cartList.value = res.result;
+      } else {
+        // 找到要删除项的下标值-splice方法||使用数组的过滤方法filter
+        const index = cartList.value.findIndex((item) => skuId === item.skuId);
+        cartList.value.splice(index, 1);
+      }
     };
 
     // 计算属性
