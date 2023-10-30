@@ -11,6 +11,12 @@ export const useCartStore = defineStore(
     const isLogin = computed(() => userStore.userInfo.token);
     // 1.定义state
     const cartList = ref([]);
+    // 获取最新的购物车列表
+    const updateNewList = async () => {
+      const res = await findNewCartListAPI();
+      cartList.value = res.result;
+    };
+
     // 2.定义action
     const addCart = async (goods) => {
       const { skuId, count } = goods;
@@ -106,6 +112,7 @@ export const useCartStore = defineStore(
       cartList,
       addCart,
       clearCart,
+      updateNewList,
     };
   },
   {
