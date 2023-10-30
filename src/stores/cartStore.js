@@ -89,7 +89,13 @@ export const useCartStore = defineStore(
         .filter((item) => item.selected)
         .reduce((a, c) => a + c.count * c.price, 0)
     );
+
+    // 清除购物车
+    const clearCartAll = () => {
+      cartList.value = "";
+    };
     return {
+      clearCartAll,
       selectedPrice,
       selectedCount,
       allCheck,
