@@ -1,5 +1,6 @@
 <script setup>
-const cartList = [];
+// const cartList = ref([])
+
 import { useCartStore } from "@/stores/cartStore";
 const cartStore = useCartStore();
 const singleCheck = function (i, selected) {

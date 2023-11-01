@@ -31,14 +31,15 @@ const countChange = () => {
 // 添加购物车
 const addCart = () => {
   if (skuObj.skuId) {
+    console.log(skuObj.skuId);
     // 用户已经选择好了规格
     cartStore.addCart({
+      skuId: skuObj.skuId,
+      count: count.value,
       id: detailList.value.id,
       name: detailList.value.name,
       price: detailList.value.price,
       pictures: detailList.value.mainPictures[0],
-      count: count.value,
-      skuId: skuObj.skuId,
       attrsText: skuObj.specsText,
       selected: true,
     });

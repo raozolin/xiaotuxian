@@ -2,7 +2,7 @@
 import httpIntance from "@/utils/http";
 
 // 加入购物车
-export const insertCartAPI = (skuId, count) => {
+export const insertCartAPI = ({ skuId, count }) => {
   return httpIntance({
     url: "/member/cart",
     method: "POST",

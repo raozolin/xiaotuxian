@@ -20,12 +20,12 @@ export const useCartStore = defineStore(
     // 2.定义action
     const addCart = async (goods) => {
       const { skuId, count } = goods;
+      console.log(skuId, count);
 
       if (isLogin.value) {
-        // 登录之后的加入购物车逻辑
+        // 登录之后的加入购车逻辑
         await insertCartAPI({ skuId, count });
-        const res = await findNewCartListAPI();
-        cartList.value = res.result;
+        updateNewList();
       } else {
         // 登录之前的购物车逻辑
         // 添加购物车操作
