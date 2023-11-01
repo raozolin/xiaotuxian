@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { loginAPI } from "@/apis/user";
 import { ref } from "vue";
 import { useCartStore } from "./cartStore";
-import { mergeCartAPI } from "/@apis/cart.js";
+import { mergeCartAPI } from "@/apis/cart.js";
 export const useUserStore = defineStore(
   "user",
   () => {
