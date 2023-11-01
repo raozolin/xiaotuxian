@@ -15,12 +15,24 @@ const getCheckInfo = async () => {
   curAddress.value = items;
   console.log(items);
 };
+
 onMounted(() => {
   getCheckInfo();
 });
 
 // 控制弹框打开
 const showDialog = ref(false);
+
+// 切换地址的回调
+const activeAddress = ref({});
+const switchAddress = (item) => {
+  activeAddress.value = item;
+};
+// 确认的时候实现数据覆盖
+const confirm = () => {
+  curAddress.value = activeAddress.value;
+  showDialog.value = false;
+};
 </script>
 
 <template>
@@ -139,7 +151,9 @@ const showDialog = ref(false);
   <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
     <div class="addressWrapper">
       <div
+        @click="switchAddress(item)"
         class="text item"
+        :class="{ active: activeAddress.id == item.id }"
         v-for="item in checkInfo.userAddresses"
         :key="item.id"
       >
@@ -155,7 +169,7 @@ const showDialog = ref(false);
     <template #footer>
       <span class="dialog-footer">
         <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
       </span>
     </template>
   </el-dialog>
