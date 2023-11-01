@@ -1,15 +1,6 @@
 <script setup>
-import { getOrderAPI } from "@/apis/pay";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-// 获取订单数据
-const route = useRoute();
+import { ref } from "vue";
 const payInfo = ref({});
-const getPayInfo = async () => {
-  const res = await getOrderAPI(route.query.id);
-  payInfo.value = res.result;
-};
-onMounted(() => getPayInfo());
 </script>
 
 <template>
@@ -20,10 +11,7 @@ onMounted(() => getPayInfo());
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>
-            支付还剩 <span>{{ formatTime }}</span
-            >, 超时后将取消订单
-          </p>
+          <p>支付还剩 <span>24分30秒</span>, 超时后将取消订单</p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
@@ -50,6 +38,7 @@ onMounted(() => getPayInfo());
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .xtx-pay-page {
   margin-top: 20px;
